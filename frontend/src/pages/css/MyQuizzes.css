@@ -1,0 +1,71 @@
+.container {
+  margin-top: 20px;
+}
+
+.quiz-card {
+  background-color: #ffffff;
+  border-radius: 15px; /* Increased rounding for a more modern look */
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Simplified transition */
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px); /* Lift effect instead of scaling */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+}
+
+.card-title {
+  font-size: 1.75rem; /* Larger font for better emphasis */
+  font-weight: 600;
+  color: #333; /* Darker color for stronger emphasis */
+}
+
+.card-actions .btn {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: #7c3aed; /* Purple for "Edit" */
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #6b21a8; /* Darker purple for hover effect */
+}
+
+.btn-error {
+  background-color: #ef4444; /* Red for "Delete" */
+  color: #ffffff;
+}
+
+.btn-error:hover {
+  background-color: #dc2626; /* Darker red for hover effect */
+}
+
+.no-quizzes-message {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #4b5563; /* Darker grey for better readability */
+  margin-bottom: 20px; /* Extra spacing from "Create New Quiz" button */
+}
+
+.create-new-quiz-btn {
+  background-color: #34d399; /* Green for call to action */
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-new-quiz-btn:hover {
+  background-color: #059669; /* Darker green on hover */
+  transform: translateY(-3px);
+}

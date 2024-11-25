@@ -1,0 +1,100 @@
+.quiz-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-title {
+    font-size: 1.8rem !important;
+    font-weight: bold !important;
+    color: #007bff !important;
+  }
+  
+  .progress {
+    font-size: 1.2rem !important;
+    color: #6c757d !important;
+    margin-top: 10px !important;
+  }
+  
+  .question-card {
+    padding: 20px !important;
+    background-color: #ffffff !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  .question-title {
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .options-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 15px !important;
+  }
+  
+  .option-button {
+    padding: 15px !important;
+    font-size: 1.1rem !important;
+    background-color: #e0e0e0 !important;  /* Darker grey for better contrast */
+    color: #333333 !important;  /* Dark color for text to ensure readability */
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
+  }
+  
+  .option-button.selected {
+    background-color: #007bff !important; /* Blue for selected state */
+    color: #ffffff !important; /* White text for selected option */
+  }
+  
+  .option-button:hover {
+    background-color: #0056b3 !important; /* Darker blue for hover */
+    color: #ffffff !important;
+  }
+  
+  .navigation-buttons {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-top: 20px !important;
+  }
+  
+  .nav-button {
+    padding: 10px 20px !important;
+    font-size: 1.1rem !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .nav-button:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+  }
+  
+  .submit-button {
+    background-color: #28a745 !important;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838 !important;
+  }
+  
+  .nav-button:hover:not(:disabled) {
+    background-color: #0056b3 !important;
+  }
+  
