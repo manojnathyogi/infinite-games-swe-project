@@ -1,15 +1,28 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import API from "../utils/api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState(null);
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  // Fetch CSRF token when the app initializes
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        await API.get("/accounts/csrf/");
+        console.log("CSRF token fetched successfully.");
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, username, setUsername }}>
       {children}
     </AuthContext.Provider>
   );

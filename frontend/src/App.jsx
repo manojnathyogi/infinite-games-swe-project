@@ -14,8 +14,6 @@ import Footer from "./components/Footer";
 import Leaderboard from "./pages/Leaderboard";
 import QuizOptions from "./pages/QuizOptions";
 import QuizOfflineSelect from "./pages/QuizOfflineSelect";
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (

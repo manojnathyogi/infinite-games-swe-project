@@ -1,38 +1,33 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "./css/Login.css"; // Import the custom CSS for styling the background
-import backgroundImage from "../assets/img/login-background.jpg"; // Import your background image
+import { useAuth } from "../context/AuthContext";
+import API from "../utils/api";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "./css/Login.css"; // Import the CSS file
 
 const Login = () => {
+  const { setIsAuthenticated, setUsername } = useAuth();
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
     try {
-      // Fetch CSRF token
-      await axios.get("http://127.0.0.1:8000/accounts/csrf/", {
-        withCredentials: true,
-      });
-
-      // Submit login request
-      const response = await axios.post(
-        "http://127.0.0.1:8000/accounts/login/",
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-
+      const response = await API.post("/accounts/login/", formData); // Use API instance
       if (response.status === 200) {
-        alert("Login successful!");
-        window.location.href = "/dashboard/"; // Redirect on success
-      }
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data.error || "Login failed. Please try again.");
+        setIsAuthenticated(true);
+        setUsername(response.data.username);
+        navigate("/dashboard"); // Redirect to dashboard
       } else {
-        alert("Network error. Please check your connection.");
+        setError("Invalid username or password");
       }
+    } catch (err) {
+      console.error("Login error:", err.response || err);
+      setError(
+        err.response?.data?.error || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -41,26 +36,27 @@ const Login = () => {
       <div className="overlay">
         <div className="login-form-container">
           <h2 className="text-3xl font-bold mb-6 text-white">Login</h2>
-          <form onSubmit={handleSubmit} className="w-full">
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
+              className="input mb-4 w-full"
               placeholder="Username"
               value={formData.username}
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="input mb-4 w-full"
             />
             <input
               type="password"
+              className="input mb-4 w-full"
               placeholder="Password"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              className="input mb-4 w-full"
             />
-            <button type="submit" className="btn btn-primary w-full">
+            <button type="submit" className="btn w-full">
               Login
             </button>
           </form>

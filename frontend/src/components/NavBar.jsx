@@ -1,78 +1,57 @@
-// New Code
-
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-
-// const NavBar = () => {
-//   const { isLoggedIn, logout } = useAuth();
-
-//   return (
-//     <nav className="bg-gray-800 p-4">
-//       <div className="container mx-auto flex justify-between items-center">
-//         <Link to="/" className="text-white text-lg font-bold">
-//           Home
-//         </Link>
-//         <div className="space-x-4">
-//           <Link to="/leaderboard" className="text-white">
-//             LeaderBoard
-//           </Link>
-//           {isLoggedIn ? (
-//             <>
-//               <Link to="/dashboard" className="text-white">
-//                 Dashboard
-//               </Link>
-//               <Link to="/profile" className="text-white">
-//                 Profile
-//               </Link>
-//               <button onClick={logout} className="text-white">
-//                 Logout
-//               </button>
-//             </>
-//           ) : (
-//             <>
-//               <Link to="/login" className="text-white">
-//                 Login
-//               </Link>
-//               <Link to="/signup" className="text-white">
-//                 Sign Up
-//               </Link>
-//             </>
-//           )}
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default NavBar;
-
-// Recent working code
-
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import API from "../utils/api"; // Import your Axios instance
 
 const NavBar = () => {
+  const { isAuthenticated, username, setIsAuthenticated, setUsername } =
+    useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await API.post("/accounts/logout/"); // Use the configured Axios instance
+      setIsAuthenticated(false); // Reset auth state
+      setUsername(null);
+      window.location.href = "/"; // Redirect to homepage
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Logout failed. Please try again.");
+    }
+  };
+
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-lg font-bold">
-          Home
-        </Link>
-        <div className="space-x-4">
-        <Link to="/leaderboard" className="text-white">
-            LeaderBoard
-          </Link>
-          <Link to="/login" className="text-white">
-            Login
-          </Link>
-          <Link to="/signup" className="text-white">
-            Sign Up
-          </Link>
-          <Link to="/dashboard" className="text-white">
-            Dashboard
-          </Link>
+    <nav className="navbar bg-gray-800 text-white p-4">
+      <div className="container mx-auto flex justify-between">
+        <div className="links flex space-x-4">
+          {!isAuthenticated ? (
+            <>
+              <div className="logo">
+                <Link to="/" className="text-xl font-bold">
+                  InfiniteGame
+                </Link>
+              </div>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Signup</Link>
+              <Link to="/leaderboard">Leaderboard</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/leaderboard">Leaderboard</Link>
+              <button onClick={handleLogout} className="text-red-500">
+                Logout
+              </button>
+            </>
+          )}
         </div>
+        {isAuthenticated && (
+          <div className="welcome">
+            Welcome,{" "}
+            <Link to="/profile">
+              <span className="font-bold">{username}</span>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

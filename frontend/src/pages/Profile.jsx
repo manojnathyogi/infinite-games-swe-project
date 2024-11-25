@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../utils/api";
+import "./css/Profile.css"; // Import the dedicated CSS file
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -29,31 +30,31 @@ const Profile = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">My Profile</h1>
-      <div className="card shadow-md">
-        <div className="card-body">
-          <div className="grid grid-cols-2 gap-4">
-            {Object.keys(profile).map((key) => (
+    <div className="profile-container">
+      <h1 className="profile-title">My Profile</h1>
+      <div className="profile-card">
+        <div className="profile-grid">
+          {Object.entries(profile).map(([key, value]) => (
+            <div key={key} className="profile-field">
+              <label htmlFor={key} className="profile-label">
+                {key.replace("_", " ")}
+              </label>
               <input
-                key={key}
+                id={key}
                 type="text"
                 placeholder={key.replace("_", " ")}
-                value={profile[key]}
+                value={value}
                 onChange={(e) =>
                   setProfile({ ...profile, [key]: e.target.value })
                 }
-                className="input input-bordered w-full"
+                className="profile-input"
               />
-            ))}
-          </div>
-          <button
-            className="btn btn-primary mt-4"
-            onClick={handleUpdateProfile}
-          >
-            Update Profile
-          </button>
+            </div>
+          ))}
         </div>
+        <button className="profile-button" onClick={handleUpdateProfile}>
+          Update Profile
+        </button>
       </div>
     </div>
   );
