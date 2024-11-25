@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Leaderboard from "./pages/Leaderboard";
 import QuizOptions from "./pages/QuizOptions";
 import QuizOfflineSelect from "./pages/QuizOfflineSelect";
+import PrivateRoute from "./components/PrivateRoute"; // Import PrivateRoute
 
 function App() {
   return (
@@ -26,15 +27,15 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/quiz/" element={<QuizOptions />} />
-            <Route path="/quiz/:quizId" element={<PlayQuiz />} />
-            <Route path="/quiz-offline" element={<QuizOfflineSelect />} />
-            <Route path="/quiz/play/:quizId" element={<PlayQuiz />} />
-            <Route path="/quiz/score/:quizId" element={<ScorePage />} />
-            <Route path="/quiz/me" element={<MyQuizzes />} />
-            <Route path="/quiz/create" element={<CreateQuiz />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/quiz/" element={<PrivateRoute><QuizOptions /></PrivateRoute>} />
+            <Route path="/quiz/:quizId" element={<PrivateRoute><PlayQuiz /></PrivateRoute>} />
+            <Route path="/quiz-offline" element={<PrivateRoute><QuizOfflineSelect /></PrivateRoute>} />
+            <Route path="/quiz/play/:quizId" element={<PrivateRoute><PlayQuiz /></PrivateRoute>} />
+            <Route path="/quiz/score/:quizId" element={<PrivateRoute><ScorePage /></PrivateRoute>} />
+            <Route path="/quiz/me" element={<PrivateRoute><MyQuizzes /></PrivateRoute>} />
+            <Route path="/quiz/create" element={<PrivateRoute><CreateQuiz /></PrivateRoute>} />
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
           </Routes>
         </main>

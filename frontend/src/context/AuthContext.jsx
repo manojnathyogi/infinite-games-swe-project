@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import API from "../utils/api";
 
 const AuthContext = createContext();
@@ -7,22 +7,33 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState(null);
 
-  // Fetch CSRF token when the app initializes
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        await API.get("/accounts/csrf/");
-        console.log("CSRF token fetched successfully.");
-      } catch (error) {
-        console.error("Error fetching CSRF token:", error);
+  // Function to check authentication status on page load
+  const checkAuthStatus = async () => {
+    try {
+      const response = await API.get("/accounts/auth-status/"); // Call the backend to check auth
+      if (response.data.isAuthenticated) {
+        setIsAuthenticated(true);
+        setUsername(response.data.username);
+      } else {
+        setIsAuthenticated(false);
+        setUsername(null);
       }
-    };
+    } catch (error) {
+      console.error("Failed to check authentication status:", error);
+      setIsAuthenticated(false);
+      setUsername(null);
+    }
+  };
 
-    fetchCsrfToken();
+  // Run the check on app initialization
+  useEffect(() => {
+    checkAuthStatus();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, username, setUsername }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, username, setUsername }}
+    >
       {children}
     </AuthContext.Provider>
   );
